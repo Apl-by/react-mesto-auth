@@ -11,7 +11,7 @@ function Card({ card, onCardClick }) {
         <h2 className="card__title">{card.name}</h2>
         <div className="card__container">
           <button className="card__button" type="button" aria-label="Кнопка - нравится"></button>
-          <p className="card__like-counter">{card.likes.lenght}</p>
+          <p className="card__like-counter">{card.likes.length}</p>
         </div>
       </div>
       <button className="card__recycle" type="button" aria-label="Кнопка - удалить"></button>

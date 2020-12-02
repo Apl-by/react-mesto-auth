@@ -121,6 +121,7 @@ function App() {
       </PopupWithForm>
 
       <PopupWithForm name="deleteForm" title="Вы уверены?" btn="Да" />
+      
       <ImagePopup card={selectedCard} isOpen={isImagePopupOpen} onClose={closeAllPopups} />
 
     </div>
