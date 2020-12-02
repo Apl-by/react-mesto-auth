@@ -12,7 +12,7 @@ function Footer() {
 
   return (
     <footer className="footer page__footer">
-      <p className="footer__copyright">&copy; {year} "Mesto", Александр Логунов</p>
+      <p className="footer__copyright">&copy; {year} "Mesto" , Александр Логунов</p>
     </footer>
   )
 }
