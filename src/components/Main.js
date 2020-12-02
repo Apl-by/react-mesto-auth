@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import defaultAvatar from '../images/avatar.png';
-import { api } from '../utils/Api';
+import { api } from '../utils/api';
 import Card from './Card';
 
 function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
@@ -24,12 +24,7 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
   useEffect(() => {
     api.getInitialCards()
       .then((res) => {
-        const cards = res.map((item) => {
-          return (
-            <Card card={item} key={item._id} onCardClick={onCardClick} />
-          );
-        })
-        setCards(cards);
+        setCards(res);
       })
       .catch(err => console.log(err));
   }, [])
@@ -56,7 +51,14 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
           onClick={onAddPlace}></button>
       </section>
       <section className="cards">
-        <ul className="cards__list">{cards}</ul>
+        <ul className="cards__list">
+          {cards.map((item) => {
+            return (
+              <Card card={item} key={item._id} onCardClick={onCardClick} />
+            );
+          })
+          }
+        </ul>
       </section>
     </main>
   )

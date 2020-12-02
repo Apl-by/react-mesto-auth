@@ -5,8 +5,8 @@ function Card({ card, onCardClick }) {
   }
 
   return (
-    <li className="card" onClick={handleClick}>
-      <img src={card.link} alt={card.name} className="card__img" />
+    <li className="card">
+      <img src={card.link} alt={card.name} className="card__img" onClick={handleClick} />
       <div className="card__sign">
         <h2 className="card__title">{card.name}</h2>
         <div className="card__container">

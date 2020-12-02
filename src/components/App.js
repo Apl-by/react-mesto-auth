@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 
 import Header from './Header';
 import Main from './Main';
@@ -26,7 +26,7 @@ function App() {
   // Выделил отдельное состояние для открытия попапа для сохранения эффекта 
   // плавного закрытия изображения
   const [isImagePopupOpen, setIsImagePopupOpen] = useState(false)
-  const [selectedCard, setSelectedCard] = useState("");
+  const [selectedCard, setSelectedCard] = useState({ name: '#', link: '' });
   const handleCardClick = (card) => {
     setSelectedCard(card);
     setIsImagePopupOpen(true)
@@ -39,26 +39,9 @@ function App() {
     setIsImagePopupOpen(false);
   }
 
-  useEffect(() => {
-
-    const closeAllPopupsByEsc = (evt) => {
-      if (evt.key === 'Escape')
-        closeAllPopups();
-    }
-
-    if (isEditProfilePopupOpen
-      || isAddPlacePopupOpen
-      || isEditAvatarPopupOpen
-      || isImagePopupOpen) {
-      document.addEventListener('keyup', closeAllPopupsByEsc);
-    }
-    return () => {
-      document.removeEventListener('keyup', closeAllPopupsByEsc);
-    }
-  }, [isEditProfilePopupOpen,
-    isAddPlacePopupOpen,
-    isEditAvatarPopupOpen,
-    isImagePopupOpen])
+  // useEffect я удалил, но я не совсем понял коментарий про обработчик,
+  // так как при закрытии попапов  обрабочтик на ESC у меня удаляется(смотрю в devtools
+  // во вкладке Elements=>Event Listeners)
 
   return (
     <div className="page__container">
@@ -121,7 +104,7 @@ function App() {
       </PopupWithForm>
 
       <PopupWithForm name="deleteForm" title="Вы уверены?" btn="Да" />
-      
+
       <ImagePopup card={selectedCard} isOpen={isImagePopupOpen} onClose={closeAllPopups} />
 
     </div>
