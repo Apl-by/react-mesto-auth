@@ -1,12 +1,12 @@
 .profile__edit-button {
   background: none;
   box-shadow: none;
-  background-image: url('../../../images/Edit-button.svg');
+  background-image: url("../../../images/Edit-button.svg");
   background-repeat: no-repeat;
   background-position: center;
   width: 24px;
   height: 24px;
-  border: 1px solid #FFFFFF;
+  border: 1px solid #ffffff;
   margin-left: 19px;
   padding: 0;
   cursor: pointer;
@@ -15,12 +15,12 @@
 
 .profile__edit-button:focus {
   outline: none;
-  opacity: .6;
+  opacity: 0.6;
 }
 
 .profile__edit-button:hover {
-  opacity: .6;
-  transition: opacity .3s linear;
+  opacity: 0.6;
+  transition: opacity 0.3s linear;
 }
 
 @media screen and (max-width: 425px) {

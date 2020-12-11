@@ -1,12 +1,12 @@
 .profile__container {
   display: grid;
-  grid-template-areas: 'avatar';
+  grid-template-areas: "avatar";
   align-items: center;
   justify-items: center;
   margin-right: 30px;
 }
 
-.profile__container:hover>.profile__shading {
+.profile__container:hover > .profile__shading {
   opacity: 1;
 }
 

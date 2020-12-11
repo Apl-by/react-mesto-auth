@@ -2,9 +2,9 @@
   display: grid;
   justify-items: center;
   grid-template-areas:
-   'header'
-   'main'
-   'footer';
+    "header"
+    "main"
+    "footer";
   width: 100%;
   max-width: 1280px;
   min-width: 320px;

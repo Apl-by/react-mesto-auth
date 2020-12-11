@@ -2,7 +2,7 @@
   background: none;
   box-shadow: none;
   border: none;
-  background-image: url('../../../images/recycle.svg');
+  background-image: url("../../../images/recycle.svg");
   position: absolute;
   top: 18px;
   right: 15px;
@@ -14,10 +14,10 @@
 
 .card__recycle:focus {
   outline: none;
-  opacity: .6;
+  opacity: 0.6;
 }
 
 .card__recycle:hover {
-  opacity: .6;
-  transition: opacity .3s linear;
+  opacity: 0.6;
+  transition: opacity 0.3s linear;
 }

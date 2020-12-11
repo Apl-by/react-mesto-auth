@@ -2,7 +2,7 @@
   background: none;
   border: none;
   box-shadow: none;
-  background-image: url('../../../images/closeicon.svg');
+  background-image: url("../../../images/closeicon.svg");
   background-size: cover;
   width: 58px;
   height: 58px;
@@ -15,12 +15,12 @@
 
 .zoom__close:focus {
   outline: none;
-  opacity: .6;
+  opacity: 0.6;
 }
 
 .zoom__close:hover {
-  opacity: .6;
-  transition: opacity .3s linear;
+  opacity: 0.6;
+  transition: opacity 0.3s linear;
 }
 
 @media screen and (max-width: 460px) {

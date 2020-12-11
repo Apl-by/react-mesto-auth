@@ -1,7 +1,7 @@
 .form__submit_disabled {
   color: #000000;
   opacity: 0.2;
-  background: #FFFFFF;
+  background: #ffffff;
   border: 1px solid #000000;
 }
 
@@ -11,5 +11,4 @@
 
 .form__submit_disabled:hover {
   opacity: 0.2;
-  
 }

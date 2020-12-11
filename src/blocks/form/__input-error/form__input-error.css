@@ -3,12 +3,12 @@
   top: calc(100% + 1px);
   left: 0;
   z-index: 1;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   font-style: normal;
   font-weight: normal;
   font-size: 12px;
   line-height: 15px;
-  color: #FF0000;
+  color: #ff0000;
   width: 100%;
   visibility: hidden;
 }

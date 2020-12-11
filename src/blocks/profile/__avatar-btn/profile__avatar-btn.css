@@ -3,7 +3,7 @@
   background: none;
   box-shadow: none;
   padding: 0;
-  background-image: url('../../../images/edit-avatar.svg');
+  background-image: url("../../../images/edit-avatar.svg");
   background-repeat: no-repeat;
   background-size: cover;
   width: 26px;
@@ -14,5 +14,5 @@
 }
 
 .profile__avatar-btn:hover {
-  opacity: .6;
+  opacity: 0.6;
 }

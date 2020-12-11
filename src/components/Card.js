@@ -1,8 +1,7 @@
 function Card({ card, onCardClick }) {
-
   const handleClick = () => {
     onCardClick(card);
-  }
+  };
 
   return (
     <li className="card">

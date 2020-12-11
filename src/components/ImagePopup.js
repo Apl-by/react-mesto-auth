@@ -1,12 +1,10 @@
-function ImagePopup({ card, isOpen, onClose }) {
-
+function ImagePopup({ name, card, isOpen, onClose }) {
   const closeOnOverlay = (evt) => {
-    if (evt.target === evt.currentTarget)
-      onClose()
-  }
+    if (evt.target === evt.currentTarget) onClose();
+  };
 
   return (
-    <div className={`popup ${isOpen && 'popup_opened'} popup_zoomed`} onClick={closeOnOverlay}>
+    <div className={`popup ${isOpen && "popup_opened"} popup_${name}`} onClick={closeOnOverlay}>
       <div className="zoom">
         <img src={card.link} alt={card.name} className="zoom__img" />
         <p className="zoom__text">{card.name}</p>
