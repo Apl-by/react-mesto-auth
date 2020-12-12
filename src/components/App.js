@@ -1,4 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { api } from "../utils/api";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import defaultAvatar from "../images/avatar.png";
 
 import Header from "./Header";
 import Main from "./Main";
@@ -7,6 +10,17 @@ import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 
 function App() {
+  const [currentUser, setCurrentUser] = useState({ name: "Name", about: "Description", avatar: defaultAvatar });
+
+  useEffect(() => {
+    api
+      .getUserInfo()
+      .then((res) => {
+        setCurrentUser(res);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const handleEditProfileClick = () => {
     setIsEditProfilePopupOpen(true);
@@ -38,106 +52,108 @@ function App() {
 
   return (
     <div className="page__container">
-      <Header />
-      <Main
-        onEditProfile={handleEditProfileClick}
-        onAddPlace={handleAddPlaceClick}
-        onEditAvatar={handleEditAvatarClick}
-        onCardClick={handleCardClick}
-      />
-      <Footer />
-      <PopupWithForm
-        name="editForm"
-        title="Редактировать профиль"
-        btn="Сохранить"
-        isOpen={isEditProfilePopupOpen}
-        onClose={closeAllPopups}
-      >
-        <label className="form__field">
-          <input
-            className="form__input"
-            id="nickname-input"
-            type="text"
-            name="name"
-            autoComplete="off"
-            minLength="2"
-            maxLength="40"
-            required
-          />
-          <span className="form__input-error" id="nickname-input-error"></span>
-        </label>
-        <label className="form__field">
-          <input
-            className="form__input"
-            id="job-input"
-            type="text"
-            name="about"
-            autoComplete="off"
-            minLength="2"
-            maxLength="200"
-            required
-          />
-          <span className="form__input-error" id="job-input-error"></span>
-        </label>
-      </PopupWithForm>
+      <CurrentUserContext.Provider value={currentUser}>
+        <Header />
+        <Main
+          onEditProfile={handleEditProfileClick}
+          onAddPlace={handleAddPlaceClick}
+          onEditAvatar={handleEditAvatarClick}
+          onCardClick={handleCardClick}
+        />
+        <Footer />
+        <PopupWithForm
+          name="editForm"
+          title="Редактировать профиль"
+          btn="Сохранить"
+          isOpen={isEditProfilePopupOpen}
+          onClose={closeAllPopups}
+        >
+          <label className="form__field">
+            <input
+              className="form__input"
+              id="nickname-input"
+              type="text"
+              name="name"
+              autoComplete="off"
+              minLength="2"
+              maxLength="40"
+              required
+            />
+            <span className="form__input-error" id="nickname-input-error"></span>
+          </label>
+          <label className="form__field">
+            <input
+              className="form__input"
+              id="job-input"
+              type="text"
+              name="about"
+              autoComplete="off"
+              minLength="2"
+              maxLength="200"
+              required
+            />
+            <span className="form__input-error" id="job-input-error"></span>
+          </label>
+        </PopupWithForm>
 
-      <PopupWithForm
-        name="addForm"
-        title="Новое место"
-        btn="Создать"
-        isOpen={isAddPlacePopupOpen}
-        onClose={closeAllPopups}
-      >
-        <label className="form__field">
-          <input
-            className="form__input"
-            id="place-input"
-            type="text"
-            name="name"
-            placeholder="Название"
-            autoComplete="off"
-            minLength="2"
-            maxLength="30"
-            required
-          />
-          <span className="form__input-error" id="place-input-error"></span>
-        </label>
-        <label className="form__field">
-          <input
-            className="form__input"
-            id="link-input"
-            type="url"
-            name="link"
-            placeholder="Ссылка на картинку"
-            required
-          />
-          <span className="form__input-error" id="link-input-error"></span>
-        </label>
-      </PopupWithForm>
+        <PopupWithForm
+          name="addForm"
+          title="Новое место"
+          btn="Создать"
+          isOpen={isAddPlacePopupOpen}
+          onClose={closeAllPopups}
+        >
+          <label className="form__field">
+            <input
+              className="form__input"
+              id="place-input"
+              type="text"
+              name="name"
+              placeholder="Название"
+              autoComplete="off"
+              minLength="2"
+              maxLength="30"
+              required
+            />
+            <span className="form__input-error" id="place-input-error"></span>
+          </label>
+          <label className="form__field">
+            <input
+              className="form__input"
+              id="link-input"
+              type="url"
+              name="link"
+              placeholder="Ссылка на картинку"
+              required
+            />
+            <span className="form__input-error" id="link-input-error"></span>
+          </label>
+        </PopupWithForm>
 
-      <PopupWithForm
-        name="avatarForm"
-        title="Обновить аватар"
-        btn="Сохранить"
-        isOpen={isEditAvatarPopupOpen}
-        onClose={closeAllPopups}
-      >
-        <label className="form__field">
-          <input
-            className="form__input"
-            id="link-input"
-            type="url"
-            name="link"
-            placeholder="Ссылка на картинку"
-            required
-          />
-          <span className="form__input-error" id="link-input-error"></span>
-        </label>
-      </PopupWithForm>
+        <PopupWithForm
+          name="avatarForm"
+          title="Обновить аватар"
+          btn="Сохранить"
+          isOpen={isEditAvatarPopupOpen}
+          onClose={closeAllPopups}
+        >
+          <label className="form__field">
+            <input
+              className="form__input"
+              id="link-input"
+              type="url"
+              name="link"
+              placeholder="Ссылка на картинку"
+              required
+            />
+            <span className="form__input-error" id="link-input-error"></span>
+          </label>
+        </PopupWithForm>
 
-      <PopupWithForm name="deleteForm" title="Вы уверены?" btn="Да" />
+        <PopupWithForm name="deleteForm" title="Вы уверены?" btn="Да" />
 
-      <ImagePopup name="zoomed" card={selectedCard} isOpen={isImagePopupOpen} onClose={closeAllPopups} />
+        <ImagePopup name="zoomed" card={selectedCard} isOpen={isImagePopupOpen} onClose={closeAllPopups} />
+      </CurrentUserContext.Provider>
     </div>
   );
 }
