@@ -9,6 +9,7 @@ import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 import EditProfilePopup from "./EditProfilePopup";
+import EditAvatarPopup from "./EditAvatarPopup";
 
 function App() {
   const [currentUser, setCurrentUser] = useState({ name: "Name", about: "Description", avatar: defaultAvatar });
@@ -67,6 +68,20 @@ function App() {
       .finally(() => setIsLoding(false));
   };
 
+  const handleUpdateAvatar = (avatarLink, e) => {
+    api
+      .editAvatar(avatarLink)
+      .then((res) => {
+        setCurrentUser(res);
+        closeAllPopups();
+      })
+      .catch((err) => console.log(err))
+      .finally(() => {
+        setIsLoding(false);
+        e.target.reset();
+      });
+  };
+
   return (
     <div className="page__container">
       <CurrentUserContext.Provider value={currentUser}>
@@ -121,25 +136,13 @@ function App() {
           </label>
         </PopupWithForm>
 
-        <PopupWithForm
-          name="avatarForm"
-          title="Обновить аватар"
-          btn="Сохранить"
+        <EditAvatarPopup
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
-        >
-          <label className="form__field">
-            <input
-              className="form__input"
-              id="link-input"
-              type="url"
-              name="link"
-              placeholder="Ссылка на картинку"
-              required
-            />
-            <span className="form__input-error" id="link-input-error"></span>
-          </label>
-        </PopupWithForm>
+          onUpdateAvatar={handleUpdateAvatar}
+          isFormLoding={isLoding}
+          onBtnClick={handleBtnClick}
+        />
 
         <PopupWithForm name="deleteForm" title="Вы уверены?" btn="Да" />
 
