@@ -1,5 +1,4 @@
 import { config } from "./utils";
-
 class Api {
   constructor(options) {
     this._baseUrl = options.baseUrl;
@@ -49,17 +48,9 @@ class Api {
     }).then(this._handleResponse);
   }
 
-  putLike(cardId) {
+  changeLikeCardStatus(cardId, isLiked) {
     return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
-      method: "PUT",
-      headers: this._headers,
-      body: JSON.stringify(),
-    }).then(this._handleResponse);
-  }
-
-  deleteLike(cardId) {
-    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
-      method: "DELETE",
+      method: isLiked ? "DELETE" : "PUT",
       headers: this._headers,
       body: JSON.stringify(),
     }).then(this._handleResponse);

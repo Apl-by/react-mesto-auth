@@ -17,6 +17,27 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
       .catch((err) => console.log(err));
   }, []);
 
+  const handleCardLike = (card) => {
+    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+    api
+      .changeLikeCardStatus(card._id, isLiked)
+      .then((newCard) => {
+        const newCards = cards.map((i) => (i._id === card._id ? newCard : i));
+        setCards(newCards);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const handleCardDelete = (card) => {
+    api
+      .deleteCard(card._id)
+      .then(() => {
+        const newCards = cards.filter((i) => !(i._id === card._id));
+        setCards(newCards);
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
     <main className="content page__main">
       <section className="profile">
@@ -53,7 +74,15 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
       <section className="cards">
         <ul className="cards__list">
           {cards.map((item) => {
-            return <Card card={item} key={item._id} onCardClick={onCardClick} />;
+            return (
+              <Card
+                card={item}
+                key={item._id}
+                onCardDelete={handleCardDelete}
+                onCardLike={handleCardLike}
+                onCardClick={onCardClick}
+              />
+            );
           })}
         </ul>
       </section>
