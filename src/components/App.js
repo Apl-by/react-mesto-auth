@@ -8,6 +8,7 @@ import Main from "./Main";
 import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
+import EditProfilePopup from "./EditProfilePopup";
 
 function App() {
   const [currentUser, setCurrentUser] = useState({ name: "Name", about: "Description", avatar: defaultAvatar });
@@ -50,6 +51,22 @@ function App() {
     setIsImagePopupOpen(false);
   };
 
+  const [isLoding, setIsLoding] = useState(false);
+  const handleBtnClick = () => {
+    setIsLoding(true);
+  };
+
+  const handleUpdateUser = (updateInfo) => {
+    api
+      .updateUserInfo(updateInfo)
+      .then((res) => {
+        setCurrentUser(res);
+        closeAllPopups();
+      })
+      .catch((err) => console.log(err))
+      .finally(() => setIsLoding(false));
+  };
+
   return (
     <div className="page__container">
       <CurrentUserContext.Provider value={currentUser}>
@@ -61,40 +78,14 @@ function App() {
           onCardClick={handleCardClick}
         />
         <Footer />
-        <PopupWithForm
-          name="editForm"
-          title="Редактировать профиль"
-          btn="Сохранить"
+        <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
-        >
-          <label className="form__field">
-            <input
-              className="form__input"
-              id="nickname-input"
-              type="text"
-              name="name"
-              autoComplete="off"
-              minLength="2"
-              maxLength="40"
-              required
-            />
-            <span className="form__input-error" id="nickname-input-error"></span>
-          </label>
-          <label className="form__field">
-            <input
-              className="form__input"
-              id="job-input"
-              type="text"
-              name="about"
-              autoComplete="off"
-              minLength="2"
-              maxLength="200"
-              required
-            />
-            <span className="form__input-error" id="job-input-error"></span>
-          </label>
-        </PopupWithForm>
+          userInfo={currentUser}
+          onUpdateUser={handleUpdateUser}
+          isFormLoding={isLoding}
+          onBtnClick={handleBtnClick}
+        />
 
         <PopupWithForm
           name="addForm"
