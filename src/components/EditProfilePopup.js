@@ -8,16 +8,6 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, isFormLoding, onBtnLo
 
   const [name, setName] = useState(currentUser.name);
   const [description, setDescription] = useState(currentUser.about);
-  // при закрытии попапа не через submit верну в поля ввода исходные значения
-  const [prevUserParams, setPrevUserParams] = useState({ name: "", about: "" });
-  const handlerPrevParams = () => {
-    setPrevUserParams({ name: name, about: description });
-  };
-
-  const handlerUserParams = () => {
-    setName(prevUserParams.name);
-    setDescription(prevUserParams.about);
-  };
 
   useEffect(() => {
     setName(currentUser.name);
@@ -25,16 +15,10 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, isFormLoding, onBtnLo
   }, [currentUser]);
 
   const handleChangeName = (e) => {
-    if (!prevUserParams.name) {
-      handlerPrevParams();
-    }
     setName(e.target.value);
   };
 
   const handleChangeDescription = (e) => {
-    if (!prevUserParams.about) {
-      handlerPrevParams();
-    }
     setDescription(e.target.value);
   };
 
@@ -46,6 +30,21 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, isFormLoding, onBtnLo
       about: description,
     });
   };
+
+  // при закрытии попапа не через submit верну в поля ввода исходные значения
+  const [prevUserParams, setPrevUserParams] = useState({ name: "", about: "" });
+  const handlerPrevParams = () => {
+    setPrevUserParams({ name: name, about: description });
+  };
+  const handlerUserParams = () => {
+    setName(prevUserParams.name);
+    setDescription(prevUserParams.about);
+  };
+
+  useEffect(() => {
+    if (!isOpen) return;
+    handlerPrevParams();
+  }, [isOpen]);
 
   return (
     <PopupWithForm

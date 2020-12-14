@@ -16,7 +16,7 @@ function PopupWithForm({ name, title, btn, children, isOpen, onClose, onSubmit, 
       <form className="form popup__form" onSubmit={onSubmit} name={name} noValidate ref={form}>
         <h2 className="form__title form__title_size_s">{title}</h2>
         {children}
-        <button className="form__submit form__submit_size_s" type="submit" onSubmit={onSubmit}>
+        <button className="form__submit form__submit_size_s" type="submit">
           {btn}
         </button>
         <button
