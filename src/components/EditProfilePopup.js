@@ -3,28 +3,44 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 import PopupWithForm from "./PopupWithForm";
 
-function EditProfilePopup({ isOpen, onClose, onUpdateUser, isFormLoding, onBtnClick }) {
+function EditProfilePopup({ isOpen, onClose, onUpdateUser, isFormLoding, onBtnLoding }) {
   const currentUser = useContext(CurrentUserContext);
 
   const [name, setName] = useState(currentUser.name);
   const [description, setDescription] = useState(currentUser.about);
+  // при закрытии попапа не через submit верну в поля ввода исходные значения
+  const [prevUserParams, setPrevUserParams] = useState({ name: "", about: "" });
+  const handlerPrevParams = () => {
+    setPrevUserParams({ name: name, about: description });
+  };
+
+  const handlerUserParams = () => {
+    setName(prevUserParams.name);
+    setDescription(prevUserParams.about);
+  };
 
   useEffect(() => {
     setName(currentUser.name);
     setDescription(currentUser.about);
   }, [currentUser]);
 
-  const handleChangeName = (event) => {
-    setName(event.target.value);
+  const handleChangeName = (e) => {
+    if (!prevUserParams.name) {
+      handlerPrevParams();
+    }
+    setName(e.target.value);
   };
 
-  const handleChangeDescription = (event) => {
-    setDescription(event.target.value);
+  const handleChangeDescription = (e) => {
+    if (!prevUserParams.about) {
+      handlerPrevParams();
+    }
+    setDescription(e.target.value);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onBtnClick();
+    onBtnLoding();
     onUpdateUser({
       name: name,
       about: description,
@@ -39,6 +55,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, isFormLoding, onBtnCl
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
+      setPrevParams={handlerUserParams}
     >
       <label className="form__field">
         <input

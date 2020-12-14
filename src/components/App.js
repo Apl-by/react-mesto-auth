@@ -53,7 +53,7 @@ function App() {
   };
 
   const [isLoding, setIsLoding] = useState(false);
-  const handleBtnClick = () => {
+  const handleBtnLoding = () => {
     setIsLoding(true);
   };
 
@@ -74,11 +74,11 @@ function App() {
       .then((res) => {
         setCurrentUser(res);
         closeAllPopups();
+        e.target.reset();
       })
       .catch((err) => console.log(err))
       .finally(() => {
         setIsLoding(false);
-        e.target.reset();
       });
   };
 
@@ -99,7 +99,7 @@ function App() {
           userInfo={currentUser}
           onUpdateUser={handleUpdateUser}
           isFormLoding={isLoding}
-          onBtnClick={handleBtnClick}
+          onBtnLoding={handleBtnLoding}
         />
 
         <PopupWithForm
@@ -141,7 +141,7 @@ function App() {
           onClose={closeAllPopups}
           onUpdateAvatar={handleUpdateAvatar}
           isFormLoding={isLoding}
-          onBtnClick={handleBtnClick}
+          onBtnLoding={handleBtnLoding}
         />
 
         <PopupWithForm name="deleteForm" title="Вы уверены?" btn="Да" />
