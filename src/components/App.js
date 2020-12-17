@@ -10,7 +10,7 @@ import ImagePopup from "./ImagePopup";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
-import PopupWithConfirm from "./PopupWithConfirm";
+import ConfirmPopup from "./ConfirmPopup";
 
 function App() {
   const [currentUser, setCurrentUser] = useState({ name: "Name", about: "Description", avatar: defaultAvatar });
@@ -173,10 +173,7 @@ function App() {
           isFormLoading={isLoading}
           onBtnLoading={handleBtnLoading}
         />
-        <PopupWithConfirm
-          name="deleteForm"
-          title="Вы уверены?"
-          btn="Да"
+        <ConfirmPopup
           isOpen={isPopupWithConfirmOpen}
           onClose={closeAllPopups}
           onCardClickDelete={handleCardDeleteConfirm}
