@@ -1,8 +1,13 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 function PopupWithForm({ name, title, btn, children, isOpen, onClose, onSubmit }) {
   // для доступа к методу reset() формы, при закрытии не через submit
   const form = useRef();
+
+  useEffect(() => {
+    if (!isOpen) return;
+    form.current.reset();
+  }, [isOpen]);
 
   const closeOnOverlay = (e) => {
     if (e.target === e.currentTarget) {
