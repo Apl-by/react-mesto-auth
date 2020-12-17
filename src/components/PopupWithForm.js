@@ -1,13 +1,12 @@
 import { useRef } from "react";
 
-function PopupWithForm({ name, title, btn, children, isOpen, onClose, onSubmit, setPrevParams }) {
+function PopupWithForm({ name, title, btn, children, isOpen, onClose, onSubmit }) {
   // для доступа к методу reset() формы, при закрытии не через submit
   const form = useRef();
 
   const closeOnOverlay = (e) => {
     if (e.target === e.currentTarget) {
       onClose();
-      name === "editForm" ? setPrevParams() : form.current.reset();
     }
   };
 
@@ -19,15 +18,7 @@ function PopupWithForm({ name, title, btn, children, isOpen, onClose, onSubmit, 
         <button className="form__submit form__submit_size_s" type="submit">
           {btn}
         </button>
-        <button
-          className="form__close"
-          type="button"
-          aria-label="Закрыть окно"
-          onClick={() => {
-            onClose();
-            name === "editForm" ? setPrevParams() : form.current.reset();
-          }}
-        ></button>
+        <button className="form__close" type="button" aria-label="Закрыть окно" onClick={onClose}></button>
       </form>
     </div>
   );

@@ -10,9 +10,10 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, isFormLoading, onBtnL
   const [description, setDescription] = useState(currentUser.about);
 
   useEffect(() => {
+    if (!isOpen) return;
     setName(currentUser.name);
     setDescription(currentUser.about);
-  }, [currentUser]);
+  }, [currentUser, isOpen]);
 
   const handleChangeName = (e) => {
     setName(e.target.value);
@@ -31,21 +32,6 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, isFormLoading, onBtnL
     });
   };
 
-  // при закрытии попапа не через submit верну в поля ввода исходные значения
-  const [prevUserParams, setPrevUserParams] = useState({ name: "", about: "" });
-  const handlerPrevParams = () => {
-    setPrevUserParams({ name: name, about: description });
-  };
-  const handlerUserParams = () => {
-    setName(prevUserParams.name);
-    setDescription(prevUserParams.about);
-  };
-
-  useEffect(() => {
-    if (!isOpen) return;
-    handlerPrevParams();
-  }, [isOpen]);
-
   return (
     <PopupWithForm
       name="editForm"
@@ -54,7 +40,6 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, isFormLoading, onBtnL
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
-      setPrevParams={handlerUserParams}
     >
       <label className="form__field">
         <input
