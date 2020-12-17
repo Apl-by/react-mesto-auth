@@ -43,7 +43,7 @@ function App() {
         e.target.reset();
       })
       .catch((err) => console.log(err))
-      .finally(() => setIsLoding(false));
+      .finally(() => setIsLoading(false));
   };
 
   const handleCardLike = (card) => {
@@ -109,9 +109,9 @@ function App() {
     setIsPopupWithConfirmOpen(false);
   };
 
-  const [isLoding, setIsLoding] = useState(false);
-  const handleBtnLoding = () => {
-    setIsLoding(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const handleBtnLoading = () => {
+    setIsLoading(true);
   };
 
   const handleUpdateUser = (updateInfo) => {
@@ -122,7 +122,7 @@ function App() {
         closeAllPopups();
       })
       .catch((err) => console.log(err))
-      .finally(() => setIsLoding(false));
+      .finally(() => setIsLoading(false));
   };
 
   const handleUpdateAvatar = (avatarLink, e) => {
@@ -134,7 +134,7 @@ function App() {
         e.target.reset();
       })
       .catch((err) => console.log(err))
-      .finally(() => setIsLoding(false));
+      .finally(() => setIsLoading(false));
   };
 
   return (
@@ -156,22 +156,22 @@ function App() {
           onClose={closeAllPopups}
           userInfo={currentUser}
           onUpdateUser={handleUpdateUser}
-          isFormLoding={isLoding}
-          onBtnLoding={handleBtnLoding}
+          isFormLoading={isLoading}
+          onBtnLoading={handleBtnLoading}
         />
         <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
           onAddPlace={handleAddPlaceSubmit}
-          isFormLoding={isLoding}
-          onBtnLoding={handleBtnLoding}
+          isFormLoading={isLoading}
+          onBtnLoading={handleBtnLoading}
         />
         <EditAvatarPopup
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
           onUpdateAvatar={handleUpdateAvatar}
-          isFormLoding={isLoding}
-          onBtnLoding={handleBtnLoding}
+          isFormLoading={isLoading}
+          onBtnLoading={handleBtnLoading}
         />
         <PopupWithConfirm
           name="deleteForm"
