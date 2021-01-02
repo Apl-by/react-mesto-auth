@@ -1,13 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function Footer() {
   const [year, setYear] = useState(2020);
 
-  const date = new Date();
-  const currentYear = date.getFullYear();
-  if (currentYear > 2020) {
-    setYear(`2020-${currentYear}`);
-  }
+  useEffect(() => {
+    const date = new Date();
+    const currentYear = date.getFullYear();
+    if (currentYear > 2020) {
+      setYear(`2020-${currentYear}`);
+    }
+  }, []);
 
   return (
     <footer className="footer page__footer">
