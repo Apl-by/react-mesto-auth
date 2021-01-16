@@ -26,7 +26,9 @@
   "eslintConfig": {
     "extends": [
       "react-app",
-      "react-app/jest"
+      "react-app/jest",
+      "plugin:prettier/recommended",
+      "prettier/react"
     ]
   },
   "browserslist": {
@@ -51,6 +53,9 @@
       "prettier --write"
     ]
   },
-  "homepage": "https://Apl-by.github.io/mesto-react/"
+  "homepage": "https://Apl-by.github.io/mesto-react/",
+  "devDependencies": {
+    "eslint-config-prettier": "^7.1.0",
+    "eslint-plugin-prettier": "^3.3.1"
+  }
 }
-
