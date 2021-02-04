@@ -1,0 +1,15 @@
+.header {
+  max-width: 882px;
+  min-height: 74px;
+  border-bottom: 1px solid rgb(84, 84, 84, 0.7);
+  width: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+@media screen and (max-width: 425px) {
+  .header {
+    min-height: 56px;
+  }
+}
