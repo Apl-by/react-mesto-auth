@@ -1,5 +1,5 @@
 {
-  "name": "mesto-react",
+  "name": "react-mesto-auth",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -53,7 +53,7 @@
       "prettier --write"
     ]
   },
-  "homepage": "https://Apl-by.github.io/mesto-react/",
+  "homepage": "https://Apl-by.github.io/react-mesto-auth/",
   "devDependencies": {
     "eslint-config-prettier": "^7.1.0",
     "eslint-plugin-prettier": "^3.3.1"
