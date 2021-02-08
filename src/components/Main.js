@@ -1,9 +1,13 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import Card from "./Card";
 
-function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, onCardDelete, onCardLike, cards }) {
+function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick, onCardDelete, onCardLike, cards, isRendered }) {
   const currentUser = useContext(CurrentUserContext);
+
+  useEffect(() => {
+    isRendered("Main");
+  }, [isRendered]);
 
   return (
     <main className="content page__main">

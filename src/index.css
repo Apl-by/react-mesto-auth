@@ -9,6 +9,9 @@
 
 @import url("./blocks/header/header.css");
 @import url("./blocks/header/__logo/header__logo.css");
+@import url("./blocks/header/__account/header__account.css");
+@import url("./blocks/header/__login/header__login.css");
+@import url("./blocks/header/__auth-btn/header__auth-btn.css");
 
 @import url("./blocks/content/content.css");
 
@@ -43,19 +46,30 @@
 @import url("./blocks/popup/popup.css");
 @import url("./blocks/popup/_opened/popup_opened.css");
 @import url("./blocks/popup/__form/popup__form.css");
+@import url("./blocks/popup/__info-tip/popup__info-tip.css");
 
 @import url("./blocks/form/form.css");
+@import url("./blocks/form/_type_auth/form_type_auth.css");
+@import url("./blocks/form/_type_info-tip/form_type_info-tip.css");
 @import url("./blocks/form/__title/form__title.css");
 @import url("./blocks/form/__title/_size_s/form__title_size_s.css");
+@import url("./blocks/form/__title/_type_auth/form__title_type_auth.css");
 @import url("./blocks/form/__field/form__field.css");
+@import url("./blocks/form/__field/_type_auth/form__field_type_auth.css");
 @import url("./blocks/form/__input/form__input.css");
+@import url("./blocks/form/__input/_type_auth/form__input_type_auth.css");
 @import url("./blocks/form/__input/_type_error/form__input_type_error.css");
 @import url("./blocks/form/__input-error/form__input-error.css");
 @import url("./blocks/form/__input-error/_visible/form__input-error_visible.css");
 @import url("./blocks/form/__submit/form__submit.css");
 @import url("./blocks/form/__submit/_disabled/form__submit_disabled.css");
 @import url("./blocks/form/__submit/_size_s/form__submit_size_s.css");
+@import url("./blocks/form/__submit/_type_auth/form__submit_type_auth.css");
 @import url("./blocks/form/__close/form__close.css");
+@import url("./blocks/form/__close/_type_info-tip/form__close_type_info-tip.css");
+@import url("./blocks/form/__redirect/form__redirect.css");
+@import url("./blocks/form/__info-tip/form__info-tip.css");
+@import url("./blocks/form/__info-tip/_rejected/form__info-tip_rejected.css");
 
 @import url("./blocks/zoom/zoom.css");
 @import url("./blocks/zoom/__img/zoom__img.css");

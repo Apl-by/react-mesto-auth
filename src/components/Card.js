@@ -1,10 +1,13 @@
 import { useContext } from "react";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
+import cn from "classnames";
 
 function Card({ card, onCardClick, onCardLike, onCardDelete }) {
   const currentUser = useContext(CurrentUserContext);
   const isOwn = card.owner._id === currentUser._id;
   const isLiked = card.likes.some((i) => i._id === currentUser._id);
+
+  const classNames = cn("card__button", { card__button_active: isLiked });
 
   const handleLikeClick = () => {
     onCardLike(card);
@@ -25,7 +28,7 @@ function Card({ card, onCardClick, onCardLike, onCardDelete }) {
         <h2 className="card__title">{card.name}</h2>
         <div className="card__container">
           <button
-            className={`card__button ${isLiked && "card__button_active"}`}
+            className={classNames}
             type="button"
             aria-label="Кнопка - нравится"
             onClick={handleLikeClick}

@@ -22,14 +22,13 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isFormLoading, onBtn
       <label className="form__field">
         <input
           className="form__input"
-          id="link-input"
           type="url"
           name="link"
           ref={avatarLink}
           placeholder="Ссылка на картинку"
           required
         />
-        <span className="form__input-error" id="link-input-error"></span>
+        <span className="form__input-error"></span>
       </label>
     </PopupWithForm>
   );

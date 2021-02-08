@@ -1,4 +1,4 @@
-import { config } from "./utils";
+import { config } from "./data";
 class Api {
   constructor(options) {
     this._baseUrl = options.baseUrl;

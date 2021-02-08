@@ -29,7 +29,6 @@ function AddPlacePopup({ isOpen, onClose, isFormLoading, onBtnLoading, onAddPlac
       <label className="form__field">
         <input
           className="form__input"
-          id="place-input"
           type="text"
           name="name"
           ref={name}
@@ -42,16 +41,8 @@ function AddPlacePopup({ isOpen, onClose, isFormLoading, onBtnLoading, onAddPlac
         <span className="form__input-error" id="place-input-error"></span>
       </label>
       <label className="form__field">
-        <input
-          className="form__input"
-          id="link-input"
-          type="url"
-          name="link"
-          ref={link}
-          placeholder="Ссылка на картинку"
-          required
-        />
-        <span className="form__input-error" id="link-input-error"></span>
+        <input className="form__input" type="url" name="link" ref={link} placeholder="Ссылка на картинку" required />
+        <span className="form__input-error"></span>
       </label>
     </PopupWithForm>
   );

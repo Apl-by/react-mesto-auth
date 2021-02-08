@@ -1,8 +1,11 @@
 import { useEffect, useRef } from "react";
+import cn from "classnames";
 
 function PopupWithForm({ name, title, btn, children, isOpen, onClose, onSubmit }) {
   // для доступа к методу reset() формы, при закрытии не через submit
   const form = useRef();
+
+  const classNames = cn("popup", { popup_opened: isOpen });
 
   useEffect(() => {
     if (!isOpen) return;
@@ -16,7 +19,7 @@ function PopupWithForm({ name, title, btn, children, isOpen, onClose, onSubmit }
   };
 
   return (
-    <div className={`popup ${isOpen && "popup_opened"} popup_form_${name}`} onClick={closeOnOverlay}>
+    <div className={classNames} onClick={closeOnOverlay}>
       <form className="form popup__form" onSubmit={onSubmit} name={name} noValidate ref={form}>
         <h2 className="form__title form__title_size_s">{title}</h2>
         {children}

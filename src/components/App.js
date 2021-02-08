@@ -1,5 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
+import { Switch, Route } from "react-router-dom";
 import { api } from "../utils/api";
+import { setBtnName } from "../utils/utils";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import defaultAvatar from "../images/avatar.png";
 
@@ -11,8 +13,20 @@ import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
 import ConfirmPopup from "./ConfirmPopup";
+import Login from "./Login";
+import Register from "./Register";
+import ProtectedRoute from "./ProtectedRoute";
+import InfoTooltip from "./InfoTooltip";
 
 function App() {
+  const [mountedComponent, setMountedComponent] = useState("");
+  const specifyMountedComponent = useCallback(
+    (name) => {
+      setMountedComponent(name);
+    },
+    [setMountedComponent]
+  );
+
   const [currentUser, setCurrentUser] = useState({ name: "Name", about: "Description", avatar: defaultAvatar });
   useEffect(() => {
     api
@@ -101,12 +115,16 @@ function App() {
     setIsPopupWithConfirmOpen(true);
   };
 
+  const [isInfoToolTipOpen, setIsInfoToolTipOpen] = useState(true);
+  const [isSuccessfulReg, setIsSuccessfulReg] = useState(false);
+
   const closeAllPopups = () => {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
     setIsImagePopupOpen(false);
     setIsPopupWithConfirmOpen(false);
+    setIsInfoToolTipOpen(false);
   };
 
   const [isLoading, setIsLoading] = useState(false);
@@ -136,20 +154,29 @@ function App() {
       .catch((err) => console.log(err))
       .finally(() => setIsLoading(false));
   };
-
   return (
     <div className="page__container">
       <CurrentUserContext.Provider value={currentUser}>
-        <Header />
-        <Main
-          onEditProfile={handleEditProfileClick}
-          onAddPlace={handleAddPlaceClick}
-          onEditAvatar={handleEditAvatarClick}
-          onCardClick={handleCardClick}
-          onCardDelete={handleCardDelete}
-          onCardLike={handleCardLike}
-          cards={cards}
-        />
+        <Header btnName={setBtnName(mountedComponent)} />
+        <Switch>
+          <Route path="/sign-in">
+            <Login isRendered={specifyMountedComponent} />
+          </Route>
+          <Route path="/sign-up">
+            <Register isRendered={specifyMountedComponent} />
+          </Route>
+          <ProtectedRoute
+            component={Main}
+            onEditProfile={handleEditProfileClick}
+            onAddPlace={handleAddPlaceClick}
+            onEditAvatar={handleEditAvatarClick}
+            onCardClick={handleCardClick}
+            onCardDelete={handleCardDelete}
+            onCardLike={handleCardLike}
+            cards={cards}
+            isRendered={specifyMountedComponent}
+          />
+        </Switch>
         <Footer />
         <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
@@ -179,7 +206,15 @@ function App() {
           onCardClickDelete={handleCardDeleteConfirm}
           card={cardForDelete}
         />
-        <ImagePopup name="zoomed" card={selectedCard} isOpen={isImagePopupOpen} onClose={closeAllPopups} />
+        <ImagePopup card={selectedCard} isOpen={isImagePopupOpen} onClose={closeAllPopups} />
+        <InfoTooltip
+          isOpen={isInfoToolTipOpen}
+          onClose={closeAllPopups}
+          isSucceeding={isSuccessfulReg}
+          message={
+            (isSuccessfulReg && "Вы успешно \n зарегистрировались!") || "Что-то пошло не так! \n Попробуйте ещё раз."
+          }
+        />
       </CurrentUserContext.Provider>
     </div>
   );

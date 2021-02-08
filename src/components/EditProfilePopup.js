@@ -44,7 +44,6 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, isFormLoading, onBtnL
       <label className="form__field">
         <input
           className="form__input"
-          id="nickname-input"
           onChange={handleChangeName}
           value={name}
           type="text"
@@ -54,12 +53,11 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, isFormLoading, onBtnL
           maxLength="40"
           required
         />
-        <span className="form__input-error" id="nickname-input-error"></span>
+        <span className="form__input-error"></span>
       </label>
       <label className="form__field">
         <input
           className="form__input"
-          id="job-input"
           onChange={handleChangeDescription}
           value={description}
           type="text"
@@ -69,7 +67,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser, isFormLoading, onBtnL
           maxLength="200"
           required
         />
-        <span className="form__input-error" id="job-input-error"></span>
+        <span className="form__input-error"></span>
       </label>
     </PopupWithForm>
   );
