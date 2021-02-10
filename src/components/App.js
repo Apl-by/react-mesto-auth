@@ -1,7 +1,8 @@
 import { useState, useEffect, useCallback } from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, useHistory } from "react-router-dom";
 import { api } from "../utils/api";
-import { setBtnName } from "../utils/utils";
+import { auth } from "../utils/auth";
+import { setBtnName, setRedirectPath } from "../utils/utils";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import defaultAvatar from "../images/avatar.png";
 
@@ -19,15 +20,24 @@ import ProtectedRoute from "./ProtectedRoute";
 import InfoTooltip from "./InfoTooltip";
 
 function App() {
+  const history = useHistory();
   const [mountedComponent, setMountedComponent] = useState("");
-  const specifyMountedComponent = useCallback(
-    (name) => {
-      setMountedComponent(name);
-    },
-    [setMountedComponent]
-  );
-
   const [currentUser, setCurrentUser] = useState({ name: "Name", about: "Description", avatar: defaultAvatar });
+  const [cards, setCards] = useState([]);
+  const [cardForDelete, setCardForDelete] = useState({});
+  const [selectedCard, setSelectedCard] = useState({ name: "#", link: "" });
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+  const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
+  const [isPopupWithConfirmOpen, setIsPopupWithConfirmOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isInfoToolTipOpen, setIsInfoToolTipOpen] = useState(false);
+  const [isSuccessfulReg, setIsSuccessfulReg] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [jwt, setJwt] = useState(localStorage.getItem("jwt"));
+  const [userEmail, setUserEmail] = useState("");
+
   useEffect(() => {
     api
       .getUserInfo()
@@ -36,8 +46,6 @@ function App() {
       })
       .catch((err) => console.log(err));
   }, []);
-
-  const [cards, setCards] = useState([]);
 
   useEffect(() => {
     api
@@ -71,7 +79,6 @@ function App() {
       .catch((err) => console.log(err));
   };
 
-  const [cardForDelete, setCardForDelete] = useState({});
   const handleCardDelete = (card) => {
     setCardForDelete(card);
     handleCardDeleteClick();
@@ -88,35 +95,30 @@ function App() {
       .catch((err) => console.log(err));
   };
 
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const handleEditProfileClick = () => {
     setIsEditProfilePopupOpen(true);
   };
 
-  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const handleAddPlaceClick = () => {
     setIsAddPlacePopupOpen(true);
   };
 
-  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const handleEditAvatarClick = () => {
     setIsEditAvatarPopupOpen(true);
   };
 
-  const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
-  const [selectedCard, setSelectedCard] = useState({ name: "#", link: "" });
   const handleCardClick = (card) => {
     setSelectedCard(card);
     setIsImagePopupOpen(true);
   };
 
-  const [isPopupWithConfirmOpen, setIsPopupWithConfirmOpen] = useState(false);
   const handleCardDeleteClick = () => {
     setIsPopupWithConfirmOpen(true);
   };
 
-  const [isInfoToolTipOpen, setIsInfoToolTipOpen] = useState(true);
-  const [isSuccessfulReg, setIsSuccessfulReg] = useState(false);
+  const handleBtnLoading = () => {
+    setIsLoading(true);
+  };
 
   const closeAllPopups = () => {
     setIsEditProfilePopupOpen(false);
@@ -125,11 +127,6 @@ function App() {
     setIsImagePopupOpen(false);
     setIsPopupWithConfirmOpen(false);
     setIsInfoToolTipOpen(false);
-  };
-
-  const [isLoading, setIsLoading] = useState(false);
-  const handleBtnLoading = () => {
-    setIsLoading(true);
   };
 
   const handleUpdateUser = (updateInfo) => {
@@ -154,16 +151,82 @@ function App() {
       .catch((err) => console.log(err))
       .finally(() => setIsLoading(false));
   };
+
+  const handleRegisterUser = (regData) => {
+    auth
+      .registerUser(regData)
+      .then((res) => {
+        setIsSuccessfulReg(true);
+        history.push("/signin");
+      })
+      .catch((err) => {
+        console.log(err);
+        setIsSuccessfulReg(false);
+      })
+      .finally(() => setIsInfoToolTipOpen(true));
+  };
+
+  const handleSignIn = (authData) => {
+    auth
+      .signIn(authData)
+      .then((res) => {
+        localStorage.setItem("jwt", res.token);
+        setJwt(res.token);
+      })
+      .catch((err) => {
+        alert(err);
+        console.log(err);
+      });
+  };
+
+  const checkValidityToken = useCallback(
+    (token) => {
+      auth
+        .checkToken(token)
+        .then((res) => {
+          setIsLoggedIn(true);
+          setUserEmail(res.data.email);
+          history.push("/");
+        })
+        .catch((err) => console.log(err));
+    },
+    [setIsLoggedIn, history]
+  );
+
+  useEffect(() => {
+    checkValidityToken(jwt);
+  }, [jwt, checkValidityToken]);
+
+  const handleSignOut = () => {
+    localStorage.removeItem("jwt");
+    setIsLoggedIn(false);
+    setUserEmail("");
+  };
+
+  const handleMountedComponent = useCallback(
+    (name) => {
+      setMountedComponent(name);
+    },
+    [setMountedComponent]
+  );
+
   return (
     <div className="page__container">
       <CurrentUserContext.Provider value={currentUser}>
-        <Header btnName={setBtnName(mountedComponent)} />
+        <Header
+          btnName={setBtnName(mountedComponent)}
+          path={setRedirectPath(mountedComponent)}
+          history={history}
+          isLoggedIn={isLoggedIn}
+          email={userEmail}
+          onSignOut={handleSignOut}
+        />
         <Switch>
-          <Route path="/sign-in">
-            <Login isRendered={specifyMountedComponent} />
+          <Route path="/signin">
+            <Login isRendered={handleMountedComponent} onSignIn={handleSignIn} />
           </Route>
-          <Route path="/sign-up">
-            <Register isRendered={specifyMountedComponent} />
+          <Route path="/signup">
+            <Register isRendered={handleMountedComponent} history={history} onSignUp={handleRegisterUser} />
           </Route>
           <ProtectedRoute
             component={Main}
@@ -174,7 +237,8 @@ function App() {
             onCardDelete={handleCardDelete}
             onCardLike={handleCardLike}
             cards={cards}
-            isRendered={specifyMountedComponent}
+            isRendered={handleMountedComponent}
+            isLoggedIn={isLoggedIn}
           />
         </Switch>
         <Footer />

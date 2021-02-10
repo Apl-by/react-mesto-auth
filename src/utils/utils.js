@@ -9,3 +9,8 @@ export const setBtnName = (component) => {
       : "Войти";
   return btnName;
 };
+
+export const setRedirectPath = (component) => {
+  const path = component === "Login" ? "/signup" : "signin";
+  return path;
+};
