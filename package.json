@@ -33,7 +33,10 @@
       "react-app/jest",
       "plugin:prettier/recommended",
       "prettier/react"
-    ]
+    ],
+    "rules": {
+      "prettier/prettier": ["error", { "endOfLine":"auto" }]
+    }
   },
   "browserslist": {
     "production": [
