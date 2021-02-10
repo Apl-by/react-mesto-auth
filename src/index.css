@@ -10,8 +10,14 @@
 @import url("./blocks/header/header.css");
 @import url("./blocks/header/__logo/header__logo.css");
 @import url("./blocks/header/__account/header__account.css");
+@import url("./blocks/header/__account/_type_mobile/header__account_type_mobile.css");
 @import url("./blocks/header/__login/header__login.css");
 @import url("./blocks/header/__auth-btn/header__auth-btn.css");
+@import url("./blocks/header/__auth-btn/_type_mobile/header__auth-btn_type_mobile.css");
+@import url("./blocks/header/__auth-btn/_type_open/header__auth-btn_type_open.css");
+@import url("./blocks/header/__auth-btn/_type_close/header__auth-btn_type_close.css");
+
+@import url("./blocks/header-mobile/header-mobile.css");
 
 @import url("./blocks/content/content.css");
 

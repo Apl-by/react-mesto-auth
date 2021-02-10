@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { Switch, Route, useHistory } from "react-router-dom";
+import { useMediaQuery } from "react-responsive";
 import { api } from "../utils/api";
 import { auth } from "../utils/auth";
 import { setBtnName, setRedirectPath } from "../utils/utils";
@@ -7,6 +8,7 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import defaultAvatar from "../images/avatar.png";
 
 import Header from "./Header";
+import HeaderMobil from "./HeaderMobil";
 import Main from "./Main";
 import Footer from "./Footer";
 import ImagePopup from "./ImagePopup";
@@ -37,6 +39,8 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [jwt, setJwt] = useState(localStorage.getItem("jwt"));
   const [userEmail, setUserEmail] = useState("");
+
+  const isMobile = useMediaQuery({ query: "(max-width: 460px)" });
 
   useEffect(() => {
     api
@@ -213,14 +217,26 @@ function App() {
   return (
     <div className="page__container">
       <CurrentUserContext.Provider value={currentUser}>
-        <Header
-          btnName={setBtnName(mountedComponent)}
-          path={setRedirectPath(mountedComponent)}
-          history={history}
-          isLoggedIn={isLoggedIn}
-          email={userEmail}
-          onSignOut={handleSignOut}
-        />
+        {isMobile && (
+          <HeaderMobil
+            btnName={setBtnName(mountedComponent)}
+            path={setRedirectPath(mountedComponent)}
+            history={history}
+            isLoggedIn={isLoggedIn}
+            email={userEmail}
+            onSignOut={handleSignOut}
+          />
+        )}
+        {!isMobile && (
+          <Header
+            btnName={setBtnName(mountedComponent)}
+            path={setRedirectPath(mountedComponent)}
+            history={history}
+            isLoggedIn={isLoggedIn}
+            email={userEmail}
+            onSignOut={handleSignOut}
+          />
+        )}
         <Switch>
           <Route path="/signin">
             <Login isRendered={handleMountedComponent} onSignIn={handleSignIn} />
