@@ -194,7 +194,7 @@ function App() {
         })
         .catch((err) => console.log(err));
     },
-    [setIsLoggedIn, history]
+    [setIsLoggedIn, setUserEmail, history]
   );
 
   useEffect(() => {
