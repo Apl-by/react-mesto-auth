@@ -7,9 +7,9 @@
  Все запросы на авторизацию, регистрацию и проверку токена производятся через сервис `https://auth.nomoreparties.co`. Остальные запросы, не относящиеся к этой проектной работе отправляются к бэкенду из предыдущих спринтов.
 
  ### Ссылки на остальные части проекта "Mesto":
-Первая часть "Mesto" на реакт без авторизации (front-end): https://github.com/Apl-by/mesto-react;  
-Back-end проекта "Mesto" на express (предварительная версия): https://github.com/Apl-by/express-mesto;    
-Итоговая версия проекта "Mesto" (front-end + back-end): https://github.com/Apl-by/react-mesto-api-full;
+Первая часть "Mesto" на реакт без авторизации (front-end): https://github.com/apl-by/mesto-react;
+Back-end проекта "Mesto" на express (предварительная версия): https://github.com/apl-by/express-mesto;
+Итоговая версия проекта "Mesto" (front-end + back-end): https://github.com/apl-by/react-mesto-api-full;
 
 ### Начало работы
 
